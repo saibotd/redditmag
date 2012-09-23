@@ -1,0 +1,61 @@
+$def with (subreddit)
+<html>
+	<head>
+		<title>redditmag - /r/$subreddit</title>
+		<meta property="og:image" content="http://redditmag.saibotd.com/static/logo.png" />
+		<meta property="og:url" content="http://redditmag.saibotd.com/" />
+		<meta property="og:title" content="/r/$subreddit on redditmag" />
+		<link href='//fonts.googleapis.com/css?family=Share&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="/static/style.css"/>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script src="/static/knockout-2.1.0.js"></script>
+		<script src="/static/knockout.mapping-latest.js"></script>
+		<script src="/static/script.js"></script>
+		<script>
+			var rmvm;
+			$$(function(){ rmvm = new RedditmagViewModel("$subreddit"); ko.applyBindings(rmvm); });
+		</script>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+	</head>
+	<body>
+		<div id="top">
+			<button>$subreddit</button>
+			<nav id="subreddits">
+				<a href="/r/pics">pics</a>
+				<a href="/r/funny">funny</a>
+				<a href="/r/itookapicture">itookapicture</a>
+				<a href="earthporn+villageporn+cityporn+spaceporn+waterporn+abandonedporn+animalporn+humanporn+botanicalporn+adrenalineporn+destructionporn+movieposterporn+albumartporn+machineporn+newsporn+geekporn+bookporn+mapporn+adporn+designporn+roomporn+militaryporn+historyporn+quotesporn+skyporn+fireporn+infrastructureporn">SFWPorn</a>
+				<a href="/r/trees">trees</a>
+				<a href="/r/windowshots">windowshots</a>
+				<a href="/r/aww">aww</a>
+				<a href="/r/wallpaper+wallpapers">wallpaper(s)</a>
+				<a href="/r/battlestations">battlestations</a>
+				<a href="/r/fffffffuuuuuuuuuuuu">fffffffuuuuuuuuuuuu</a>
+				<a href="/r/adviceanimals">adviceanimals</a>
+				<a href="https://play.google.com/store/apps/details?id=com.saibotd.reddmag">redditmag for Android</a>
+			</nav>
+			<div><input name="over_18" id="over_18" type="checkbox" data-bind="checked: over_18" /> <label for="over_18">Show adult content</label></div>
+		</div>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+		<div id="posts" data-bind="foreach: data">
+			<!-- ko if: !over_18() || $$root.over_18() -->
+			<div class="post" data-bind="style: { width: $$root.size(), height: $$root.size }, event: { mouseenter: hoverOn }">
+				<a data-bind="attr: { href: url }">
+					<img data-bind="attr: { src: '/i/'+encodeURIComponent(url()) }, event: { load: $$root.showImg }" />
+				</a>
+				<!-- ko if: is_self -->
+					<a class="selftext" data-bind="attr: { href: url }, text: selftext"></a>
+				<!-- /ko -->
+				<a class="title" data-bind="text: title, attr: { href: url }"></a>
+				<div class="vote">
+					<!-- ko if: hover -->
+					<iframe data-bind="attr: { src : 'http://www.reddit.com/static/button/button3.html?width=80&url='+encodeURIComponent(url()) }" frameborder="0" width="80" height="50"></iframe>
+					<!-- /ko -->
+				</div>
+			</div>
+			<!-- /ko -->
+		</div>
+	</body>
+</html>
