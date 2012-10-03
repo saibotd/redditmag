@@ -95,7 +95,7 @@ def scrape(url):
 		for img in tree.xpath('.//link[@rel="image_src"]'):
 			uri = img.get("href")
 			if gen_thumb(url, uri, thumb_size) is True : return True
-			if gen_thumb(url, uri + ".jpg", thumb_size) is True : return True
+			if uri.find("imgur") >= 0 and gen_thumb(url, uri + ".jpg", thumb_size) is True : return True
 			
 		for img in tree.xpath('.//img[@id="img"]'):
 			uri = urljoin(response.url, img.get("src"))
